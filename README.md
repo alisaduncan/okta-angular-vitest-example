@@ -1,6 +1,4 @@
-# Angular Standalone Runtime Configuration Example
-
-This repository contains a working example of adding Okta Angular SDK to a standalone Angular project and how to load the Okta authentication configuration at runtime. Please read [Flexible Authentication Configurations in Angular Applications Using Okta][blog] for a detailed guide through.
+# Angular Vitest Example
 
 **Prerequisites**
 
@@ -92,10 +90,9 @@ This example uses the following open source libraries from Okta:
 
 ## Help
 
-Please post any questions as comments on the [blog post][blog], or visit our [Okta Developer Forums](https://devforum.okta.com/).
+Please post any questions as comments on the [Okta Developer Forums](https://devforum.okta.com/).
 
 ## License
 
 Apache 2.0, see [LICENSE](LICENSE).
 
-[blog]: https://developer.okta.com/blog/2024/02/28/okta-authentication-angular
