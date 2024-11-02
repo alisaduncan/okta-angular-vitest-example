@@ -2,12 +2,17 @@ import { TestBed, inject } from '@angular/core/testing';
 import { HttpClient, HttpInterceptorFn, provideHttpClient, withInterceptors } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 
+import { describe, expect, afterEach, beforeEach, it } from 'vitest';
+
 import { authInterceptor } from './auth.interceptor';
-import OktaAuth from '@okta/okta-auth-js';
 import { OKTA_AUTH } from '@okta/okta-angular';
 
+
 describe('authInterceptor', () => {
-  const authServiceSpy = jasmine.createSpyObj<OktaAuth>(['getAccessToken']);
+  // const authServiceSpy = jasmine.createSpyObj<OktaAuth>(['getAccessToken']);
+  const authServiceSpy = {
+    getAccessToken: () => 'let-me-in'
+  }
   let httpClient: HttpClient;
   let httpMock: HttpTestingController;
 
@@ -22,8 +27,6 @@ describe('authInterceptor', () => {
         { provide: OKTA_AUTH, useValue: authServiceSpy }
       ]
     });
-
-    authServiceSpy.getAccessToken.and.returnValue('let-me-in');
   });
 
   it('should be created', () => {

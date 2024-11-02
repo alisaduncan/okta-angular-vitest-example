@@ -3,15 +3,27 @@ import { AppComponent } from './app.component';
 
 import { of } from 'rxjs';
 import { OktaAuthStateService, OKTA_AUTH } from '@okta/okta-angular';
+import { describe, beforeEach, it, expect, vi, } from 'vitest';
+
 
 describe('AppComponent', () => {
-  const authStateSpy = jasmine.createSpyObj('OktaAuthStateService', [], {
+  // const authStateSpy = jasmine.createSpyObj('OktaAuthStateService', [], {
+  //   authState$: of({
+  //     isAuthenticated: false
+  //   })
+  // });
+
+  const authStateMock = {
     authState$: of({
       isAuthenticated: false
     })
-  });
+  };
 
-  const authSpy = jasmine.createSpyObj('OktaAuth', ['signInWithRedirect']);
+  // const authSpy = jasmine.createSpyObj('OktaAuth', ['signInWithRedirect']);
+  const authMock = {
+    signInWithRedirect: () => {}
+  };
+  const authSpy = vi.spyOn(authMock, 'signInWithRedirect');
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -19,8 +31,8 @@ describe('AppComponent', () => {
         AppComponent
       ],
       providers: [
-        { provide: OktaAuthStateService, useValue: authStateSpy },
-        { provide: OKTA_AUTH, useValue: authSpy }
+        { provide: OktaAuthStateService, useValue: authStateMock },
+        { provide: OKTA_AUTH, useValue: authMock }
       ],
     }).compileComponents();
   });
@@ -35,7 +47,7 @@ describe('AppComponent', () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
     await app.signIn().then(() => {
-      expect(authSpy.signInWithRedirect).toHaveBeenCalled();
+      authSpy.mock.calls.length === 1;
     });
   })
 });

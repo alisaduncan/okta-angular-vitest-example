@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { AsyncPipe } from '@angular/common';
 import { OktaAuthStateService } from '@okta/okta-angular';
 import { AuthState } from '@okta/okta-auth-js';
-import { filter, map } from 'rxjs';
+import { filter, map, tap } from 'rxjs';
 
 @Component({
   selector: 'app-profile',
@@ -25,6 +25,6 @@ export class ProfileComponent {
   private oktaAuthStateService = inject(OktaAuthStateService);
   public name$ = this.oktaAuthStateService.authState$.pipe(
     filter((authState: AuthState) => !!authState && !!authState.isAuthenticated),
-    map((authState: AuthState) => authState.idToken?.claims.name ?? '')
+    map((authState: AuthState) => authState.idToken?.claims.name ?? 'Beep')
   );
 }
